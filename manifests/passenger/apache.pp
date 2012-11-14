@@ -9,9 +9,9 @@ class rvm::passenger::apache(
   $spawnmethod = 'smart-lv2'
 ) {
 
-  case $::operatingsystem {
-    Ubuntu,Debian: { include rvm::passenger::apache::ubuntu::pre }
-    CentOS,RedHat: { include rvm::passenger::apache::centos::pre }
+  case $::osfamily {
+    debian: { include rvm::passenger::apache::ubuntu::pre }
+    redhat: { include rvm::passenger::apache::centos::pre }
   }
 
   class {
@@ -26,8 +26,8 @@ class rvm::passenger::apache(
   $gempath = "${rvm_prefix}rvm/gems/${ruby_version}/gems"
   $binpath = "${rvm_prefix}rvm/bin/"
 
-  case $::operatingsystem {
-    Ubuntu,Debian: {
+  case $::osfamily {
+    debian: {
       if !defined(Class['rvm::passenger::apache::ubuntu::post']) {
         class { 'rvm::passenger::apache::ubuntu::post':
           ruby_version       => $ruby_version,
@@ -43,7 +43,7 @@ class rvm::passenger::apache(
         }
       }
     }
-    CentOS,RedHat: {
+    redhat: {
       if !defined(Class['rvm::passenger::apache::centos::post']) {
         class { 'rvm::passenger::apache::centos::post':
           ruby_version       => $ruby_version,

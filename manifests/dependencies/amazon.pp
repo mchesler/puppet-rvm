@@ -1,13 +1,6 @@
-class rvm::dependencies::centos {
+class rvm::dependencies::amazon {
 
-  case $::operatingsystemrelease {
-    /^6\..*/: {
-      if ! defined(Package['libcurl-devel']) { package { 'libcurl-devel':      ensure => installed } }
-    }
-    default: {
-      if ! defined(Package['curl-devel'])    { package { 'curl-devel':      ensure => installed } }
-    }
-  }
+  if ! defined(Package['libcurl-devel'])   { package { 'libcurl-devel':   ensure => installed } }
   if ! defined(Package['which'])           { package { 'which':           ensure => installed } }
   if ! defined(Package['gcc'])             { package { 'gcc':             ensure => installed } }
   if ! defined(Package['gcc-c++'])         { package { 'gcc-c++':         ensure => installed } }
